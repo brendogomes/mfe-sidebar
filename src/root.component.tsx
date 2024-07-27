@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -17,29 +15,45 @@ import ListItemText from '@mui/material/ListItemText';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 100;
-
-interface Props {
-  window?: () => Window;
-}
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
+const drawerBackgroundColor = 'rgb(13, 14, 18)';
+const iconColor = 'lightblue';
+const borderColor = 'rgba(255, 255, 255, 0.1)';
 
 const DrawerList = styled(List)(({ theme }) => ({
-  paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'flex-start',
+  backgroundColor: drawerBackgroundColor,
+  height: '100%'
 }));
 
-export default function ResponsiveDrawer(props: Props) {
+const DrawerListItem = styled(ListItem)(({ theme }) => ({
+  backgroundColor: drawerBackgroundColor,
+  '&:hover': {
+    backgroundColor: 'rgba(13, 14, 18, 0.8)',
+  },
+}));
+
+const DrawerListItemButton = styled(ListItemButton)(({ theme }) => ({
+  backgroundColor: drawerBackgroundColor,
+  '&:hover': {
+    backgroundColor: 'rgba(13, 14, 18, 0.8)',
+  },
+  color: 'white',
+}));
+
+const DrawerToggleButton = styled(IconButton)(({ theme }) => ({
+  alignSelf: 'flex-end',
+  color: 'white',
+}));
+
+const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  color: iconColor,
+}));
+
+export default function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [drawerOpen, setDrawerOpen] = React.useState(true);
@@ -50,19 +64,16 @@ export default function ResponsiveDrawer(props: Props) {
 
   const drawer = (
     <div>
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerToggle}>
-          {drawerOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
       <DrawerList>
+        <DrawerToggleButton onClick={handleDrawerToggle}>
+          {drawerOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
+        </DrawerToggleButton>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton sx={{ justifyContent: 'center' }}>
-              <ListItemIcon sx={{ minWidth: 30 }}>
+          <DrawerListItem key={text} disablePadding>
+            <DrawerListItemButton sx={{ justifyContent: 'center' }}>
+              <StyledListItemIcon sx={{ minWidth: 30 }}>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+              </StyledListItemIcon>
               {drawerOpen && (
                 <ListItemText
                   primary={text}
@@ -70,11 +81,12 @@ export default function ResponsiveDrawer(props: Props) {
                     opacity: drawerOpen ? 1 : 0,
                     transition: 'opacity 0.3s ease',
                     ml: 1,
+                    color: 'white',
                   }}
                 />
               )}
-            </ListItemButton>
-          </ListItem>
+            </DrawerListItemButton>
+          </DrawerListItem>
         ))}
       </DrawerList>
     </div>
@@ -86,7 +98,7 @@ export default function ResponsiveDrawer(props: Props) {
     <Box sx={{ display: 'flex' }}>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
         <Drawer
@@ -98,8 +110,14 @@ export default function ResponsiveDrawer(props: Props) {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: 'block', sm: 'block' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              position: 'relative',
+              backgroundColor: drawerBackgroundColor,
+              borderRight: `1px solid ${borderColor}`,
+            },
           }}
         >
           {drawer}
@@ -107,12 +125,16 @@ export default function ResponsiveDrawer(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'block', sm: 'block' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerOpen ? drawerWidth : collapsedDrawerWidth,
               transition: 'width 0.3s ease',
               overflow: 'hidden',
+              position: 'relative',
+              height: '100vh',
+              backgroundColor: drawerBackgroundColor,
+              borderRight: `1px solid ${borderColor}`,
             },
           }}
           open
