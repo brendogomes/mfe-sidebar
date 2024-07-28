@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -68,15 +67,14 @@ export default function ResponsiveDrawer(props) {
         <DrawerToggleButton onClick={handleDrawerToggle}>
           {drawerOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
         </DrawerToggleButton>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <DrawerListItem key={text} disablePadding>
+          <DrawerListItem disablePadding>
             <DrawerListItemButton sx={{ justifyContent: 'center' }}>
               <StyledListItemIcon sx={{ minWidth: 30 }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <DashboardIcon />
               </StyledListItemIcon>
               {drawerOpen && (
                 <ListItemText
-                  primary={text}
+                  primary={'Dashboard'}
                   sx={{
                     opacity: drawerOpen ? 1 : 0,
                     transition: 'opacity 0.3s ease',
@@ -87,7 +85,6 @@ export default function ResponsiveDrawer(props) {
               )}
             </DrawerListItemButton>
           </DrawerListItem>
-        ))}
       </DrawerList>
     </div>
   );
