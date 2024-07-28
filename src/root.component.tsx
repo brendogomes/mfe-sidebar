@@ -12,6 +12,16 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'my-component' : {
+        first: string
+      }
+    }
+  }
+}
+
 const drawerWidth = 240;
 const collapsedDrawerWidth = 100;
 const drawerBackgroundColor = 'rgb(13, 14, 18)';
@@ -63,6 +73,7 @@ export default function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
+      <my-component first="FUNCIONOU"></my-component>
       <DrawerList>
         <DrawerToggleButton onClick={handleDrawerToggle}>
           {drawerOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
