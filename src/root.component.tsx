@@ -15,9 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'my-component' : {
-        first: string
-      }
+      'web-button'
     }
   }
 }
@@ -73,7 +71,6 @@ export default function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <my-component first="FUNCIONOU"></my-component>
       <DrawerList>
         <DrawerToggleButton onClick={handleDrawerToggle}>
           {drawerOpen ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
@@ -96,6 +93,9 @@ export default function ResponsiveDrawer(props) {
               )}
             </DrawerListItemButton>
           </DrawerListItem>
+
+          <web-button></web-button>
+
       </DrawerList>
     </div>
   );
